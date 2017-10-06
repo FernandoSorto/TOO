@@ -11,20 +11,57 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
         integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        
+
     </head>
     <body>
-        <div>Expediente Clinico</div>
-        <h5>Nombre</h5><input type="text" placeholder="nombre" name="nombre" size="40"/><br><br>
-        <h5>Apellido</h5><input type="text" placeholder="apellido" name="apellido" size="40"/><br><br>
-        <h5>Fecha de nacimiento</h5><input type="text" placeholder="fecha de nacimiento" name="fechaNacimiento" size="40"/><br><br>
-        <h5>Direccion</h5><input type="text" placeholder="direccion" name="direccion" size="40"/><br><br>
-        <h5>DUI</h5><input type="text" placeholder="DUI" name="dui" size="40"/><br><br>
-        <h5>Profesion u oficio</h5><input type="text" placeholder="profesion u oficio" name="profesion" size="40"/><br><br>
-        <h5>Nombre de padre y madre</h5><input type="text" placeholder="nombre padre y madre" name="nombreMadreYPadre" size="40"/><br><br>
-        <h5>Estado civil</h5><input type="text" placeholder="estado civil" name="estadoCivil" size="40"/><br><br>
-        <h5>Genero</h5><input type="text" placeholder="genero" name="generp" size="40"/><br><br>
-        <button type="button" class=" btn btn-primary">AGREGAR EXPEDIENTE</button><br><br>
-        <a href="index.html"><button type="button" class="btn btn-primary">REGRESAR</button></a>
-        
+        <div><h1>Expediente Clinico</h1></div><br>
+        <label>Nombre </label><input type="text" placeholder="nombre" name="nombre" size="40"/><br><br>
+        <label>Apellido </label><input type="text" placeholder="apellido" name="apellido" size="40"/><br><br>
+        <label>Fecha de nacimiento </label>
+        <input type="date"><br>
+        <label>Direccion </label><br>
+        <label>Departamento </label>
+        <select>
+            <option value="ah">Ahuachapan</option>
+            <option value="so">Sonsonate</option>
+            <option value="sa">Ahuachapan</option>
+            <option value="ll">La Libertad</option>
+            <option value="ch">Chalatenango</option>
+            <option value="ss">San Salvador</option>
+            <option value="lp">La Paz</option>
+            <option value="cu">Cuscatlan</option>
+            <option value="ca">Cabanas</option>
+            <option value="sv">San Vicente</option>
+            <option value="us">Usulutan</option>
+            <option value="sm">San Miguel</option>
+            <option value="mo">Morazan</option>
+            <option value="lu">La Union</option>
+        </select>
+        <label> Municipio </label>
+        <select>
+            <option value="p">Pendiente</option>
+        </select><br><br>
+        <label>DUI </label><input type="text" placeholder="DUI" name="dui" size="40"/><br><br>
+        <label>Profesion u oficio </label><input type="text" placeholder="profesion u oficio" name="profesion" size="40"/><br><br>
+        <label>Nombre del padre </label><input type="text" placeholder="nombre" name="nombre" size="40"/><br><br>
+        <label>Apellido del padre </label><input type="text" placeholder="apellido" name="apellido" size="40"/><br><br>
+        <label>Nombre de la madre </label><input type="text" placeholder="nombre" name="nombre" size="40"/><br><br>
+        <label>Apellido de la madre </label><input type="text" placeholder="apellido" name="apellido" size="40"/><br><br>
+        <label>Estado civil </label>
+        <select>
+            <option value="so">Soltero/a</option>
+            <option value="co">Comprometido/a</option>
+            <option value="ca">Casado/a</option>
+            <option value="di">Divorciado/a</option>
+            <option value="vi">Viudo/a</option>
+        </select><br><br>
+        <label>Genero </label>        
+        <select>
+            <option value="m">Masculino</option>
+            <option value="f">Femenino</option>
+        </select><br><br>
+        <button type="button" class=" btn btn-primary">AGREGAR EXPEDIENTE</button>
+        <a href="index.html"><button type="button" class=" btn btn-primary">CANCELAR</button></a>
     </body>
 </html>
