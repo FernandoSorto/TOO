@@ -1,0 +1,211 @@
+/*==============================================================*/
+/* DBMS name:      ORACLE Version 11g                           */
+/* Created on:     06/10/2017 04:43:22 p.m.                     */
+/*==============================================================*/
+
+
+alter table CONSULTA
+   drop constraint FK_CONSULTA_RELATIONS_MEDICO;
+
+alter table CONSULTA
+   drop constraint FK_CONSULTA_RELATIONS_EXPEDIEN;
+
+alter table DEPARTAMENTO
+   drop constraint FK_DEPARTAM_RELATIONS_PACIENTE;
+
+alter table EXPEDIENTE
+   drop constraint FK_EXPEDIEN_RELATIONS_PACIENTE;
+
+alter table MUNICIPIO
+   drop constraint FK_MUNICIPI_RELATIONS_DEPARTAM;
+
+alter table PACIENTE
+   drop constraint FK_PACIENTE_RELATIONS_EXPEDIEN;
+
+alter table PACIENTE
+   drop constraint FK_PACIENTE_RELATIONS_DEPARTAM;
+
+drop index RELATIONSHIP_5_FK;
+
+drop index RELATIONSHIP_1_FK;
+
+drop table CONSULTA cascade constraints;
+
+drop index RELATIONSHIP_7_FK;
+
+drop table DEPARTAMENTO cascade constraints;
+
+drop index RELATIONSHIP_3_FK;
+
+drop table EXPEDIENTE cascade constraints;
+
+drop table MEDICO cascade constraints;
+
+drop index RELATIONSHIP_8_FK;
+
+drop table MUNICIPIO cascade constraints;
+
+drop index RELATIONSHIP_6_FK;
+
+drop index RELATIONSHIP_2_FK;
+
+drop table PACIENTE cascade constraints;
+
+/*==============================================================*/
+/* Table: CONSULTA                                              */
+/*==============================================================*/
+create table CONSULTA 
+(
+   IDCONSULTA           INTEGER              not null,
+   IDEXPEDIENTE         INTEGER,
+   IDMEDICO             VARCHAR2(10),
+   ESTADOCONSULTA       SMALLINT             not null,
+   TEMPERATURA          VARCHAR2(5)          not null,
+   PESO                 VARCHAR2(5)          not null,
+   ALTURA               VARCHAR2(5)          not null,
+   PRESIONARTERIAL      VARCHAR2(5)          not null,
+   PULSOCARDIACO        VARCHAR2(5)          not null,
+   constraint PK_CONSULTA primary key (IDCONSULTA)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_1_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_1_FK on CONSULTA (
+   IDMEDICO ASC
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_5_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_5_FK on CONSULTA (
+   IDEXPEDIENTE ASC
+);
+
+/*==============================================================*/
+/* Table: DEPARTAMENTO                                          */
+/*==============================================================*/
+create table DEPARTAMENTO 
+(
+   NOMBREDEPARTAMENTO   VARCHAR2(50)         not null,
+   IDPACIENTE           VARCHAR2(10),
+   constraint PK_DEPARTAMENTO primary key (NOMBREDEPARTAMENTO)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_7_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_7_FK on DEPARTAMENTO (
+   IDPACIENTE ASC
+);
+
+/*==============================================================*/
+/* Table: EXPEDIENTE                                            */
+/*==============================================================*/
+create table EXPEDIENTE 
+(
+   IDEXPEDIENTE         INTEGER              not null,
+   IDPACIENTE           VARCHAR2(10),
+   constraint PK_EXPEDIENTE primary key (IDEXPEDIENTE)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_3_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_3_FK on EXPEDIENTE (
+   IDPACIENTE ASC
+);
+
+/*==============================================================*/
+/* Table: MEDICO                                                */
+/*==============================================================*/
+create table MEDICO 
+(
+   IDMEDICO             VARCHAR2(10)         not null,
+   NOMBREMEDICO         VARCHAR2(50)         not null,
+   APELLIDOSMEDICO      VARCHAR2(50)         not null,
+   ESPECIALIDADMEDICO   VARCHAR2(50)         not null,
+   constraint PK_MEDICO primary key (IDMEDICO)
+);
+
+/*==============================================================*/
+/* Table: MUNICIPIO                                             */
+/*==============================================================*/
+create table MUNICIPIO 
+(
+   NOMBREMUNICIPIO      VARCHAR2(50)         not null,
+   NOMBREDEPARTAMENTO   VARCHAR2(50),
+   constraint PK_MUNICIPIO primary key (NOMBREMUNICIPIO)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_8_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_8_FK on MUNICIPIO (
+   NOMBREDEPARTAMENTO ASC
+);
+
+/*==============================================================*/
+/* Table: PACIENTE                                              */
+/*==============================================================*/
+create table PACIENTE 
+(
+   IDPACIENTE           VARCHAR2(10)         not null,
+   IDEXPEDIENTE         INTEGER,
+   NOMBREDEPARTAMENTO   VARCHAR2(50),
+   NOMBREPACIENTE       VARCHAR2(50)         not null,
+   APELLIDOSPACIENTE    VARCHAR2(50)         not null,
+   FECHANACIMIENTO      DATE                 not null,
+   PROFESIONOFICIOPACIENTE VARCHAR2(25)         not null,
+   NOMBREMADRE          VARCHAR2(50),
+   APELLIDOMADRE        VARCHAR2(50),
+   CONYUGUEPACIENTE     VARCHAR2(100),
+   ESTADOCIVILPACIENTE  SMALLINT             not null,
+   GENEROPACIENTE       SMALLINT             not null,
+   NOMBREPADRE          VARCHAR2(50),
+   APELLIDOPADRE        VARCHAR2(50),
+   constraint PK_PACIENTE primary key (IDPACIENTE)
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_2_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_2_FK on PACIENTE (
+   IDEXPEDIENTE ASC
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_6_FK                                     */
+/*==============================================================*/
+create index RELATIONSHIP_6_FK on PACIENTE (
+   NOMBREDEPARTAMENTO ASC
+);
+
+alter table CONSULTA
+   add constraint FK_CONSULTA_RELATIONS_MEDICO foreign key (IDMEDICO)
+      references MEDICO (IDMEDICO);
+
+alter table CONSULTA
+   add constraint FK_CONSULTA_RELATIONS_EXPEDIEN foreign key (IDEXPEDIENTE)
+      references EXPEDIENTE (IDEXPEDIENTE);
+
+alter table DEPARTAMENTO
+   add constraint FK_DEPARTAM_RELATIONS_PACIENTE foreign key (IDPACIENTE)
+      references PACIENTE (IDPACIENTE);
+
+alter table EXPEDIENTE
+   add constraint FK_EXPEDIEN_RELATIONS_PACIENTE foreign key (IDPACIENTE)
+      references PACIENTE (IDPACIENTE);
+
+alter table MUNICIPIO
+   add constraint FK_MUNICIPI_RELATIONS_DEPARTAM foreign key (NOMBREDEPARTAMENTO)
+      references DEPARTAMENTO (NOMBREDEPARTAMENTO);
+
+alter table PACIENTE
+   add constraint FK_PACIENTE_RELATIONS_EXPEDIEN foreign key (IDEXPEDIENTE)
+      references EXPEDIENTE (IDEXPEDIENTE);
+
+alter table PACIENTE
+   add constraint FK_PACIENTE_RELATIONS_DEPARTAM foreign key (NOMBREDEPARTAMENTO)
+      references DEPARTAMENTO (NOMBREDEPARTAMENTO);
+
