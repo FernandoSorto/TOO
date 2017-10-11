@@ -1,0 +1,336 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ * Author:  Jeny
+ * Created: 10-07-2017
+ */
+/*
+DROP TRIGGER IF EXISTS HR.CON_BIR;
+DROP TRIGGER IF EXISTS HR.DEP_BIR;
+DROP TRIGGER IF EXISTS HR.EMP_BIR;
+DROP TRIGGER IF EXISTS HR.EXA_BIR;
+DROP TRIGGER IF EXISTS HR.MED_BIR;
+DROP TRIGGER IF EXISTS HR.MUN_BIR;
+DROP TRIGGER IF EXISTS HR.PAC_BIR;
+DROP TRIGGER IF EXISTS HR.SIG_BIR;
+
+DROP IF EXISTS SEQUENCE HR.MED_SEQ;  
+DROP IF EXISTS SEQUENCE HR.PAC_SEQ;
+DROP IF EXISTS SEQUENCE HR.CLI_SEQ;
+DROP IF EXISTS SEQUENCE HR.EXA_SEQ;
+DROP IF EXISTS SEQUENCE HR.CON_SEQ;
+DROP IF EXISTS SEQUENCE HR.SIG_SEQ;
+DROP IF EXISTS SEQUENCE HR.MUN_SEQ;
+DROP IF EXISTS SEQUENCE HR.DEP_SEQ;
+DROP IF EXISTS SEQUENCE HR.EMP_SEQ;
+
+DROP table IF EXISTS HR.CONSULTA; 
+DROP table IF EXISTS HR.CLINICA;
+DROP table IF EXISTS HR.MEDICO;
+DROP table IF EXISTS HR.EXAMEN;
+DROP table IF EXISTS HR.PACIENTE;
+DROP table IF EXISTS HR.EMPLEADO;
+DROP table IF EXISTS HR.SIGNOSVITALES;
+DROP table IF EXISTS HR.DEPARTAMENTO;
+DROP table IF EXISTS HR.MUNICIPIO;
+*/
+/*==============================================================*/
+/* Table: MEDICO                                                */
+/*==============================================================*/
+
+create table HR.MEDICO 
+(
+   IDMEDICO       INTEGER              not null,
+   NOMBRE         VARCHAR2(25)         not null,
+   APELLIDOS      VARCHAR2(25)         not null,
+   ESPECIALIDAD   VARCHAR2(25)         not null,
+   IDCLINICA      INTEGER              not null,
+
+   constraint PK_MEDICO primary key (IDMEDICO)
+);
+/*==============================================================*/
+/* Table: PACIENTE                                              */
+/*==============================================================*/
+create table HR.PACIENTE 
+(
+   IDPACIENTE           INTEGER              not null,
+   NOMBRE               VARCHAR2(25)         not null,
+   APELLIDOS            VARCHAR2(25)         not null,
+   FECHANACIMIENTO      DATE                 not null,
+   PROFESION            VARCHAR2(25),         
+   DUI                  VARCHAR2(25)         not null,
+   NOMBREMADRE          VARCHAR2(50),
+   APELLIDOMADRE        VARCHAR2(50),
+   NOMBREPADRE          VARCHAR2(25),
+   APELLIDOPADRE        VARCHAR2(25),
+   CONYUGUE             VARCHAR2(50),
+   ESTADOCIVIL          VARCHAR2(25)         not null,
+   GENERO               VARCHAR2(25)         not null,
+   DIRECCION           VARCHAR2(75),
+   IDDEPARTAMENTO       INTEGER              not null,
+   IDMUNICIPIO          INTEGER              not null,
+
+   constraint PK_PACIENTE primary key (IDPACIENTE)
+);
+/*==============================================================*/
+/* Table: CLINICA                                               */
+/*==============================================================*/
+create table HR.CLINICA 
+(
+    IDCLINICA           INTEGER             not null,
+    NOMBRE              VARCHAR2(50)        not null,
+    DIRECCION           VARCHAR2(75)        not null,
+    IDDEPARTAMENTO      INTEGER             not null,
+    IDMUNICIPIO         INTEGER             not null,
+
+    constraint PK_CLINICA primary key (IDCLINICA)
+);
+/*==============================================================*/
+/* Table: EXAMEN                                              */
+/*==============================================================*/
+create table HR.EXAMEN 
+(
+    IDEXAMEN    INTEGER             not null,
+    /* Faltan campos de examenes*/
+
+    constraint PK_EXAMEN primary key (IDEXAMEN)
+);
+/*==============================================================*/
+/* Table: CONSULTA                                              */
+/*==============================================================*/
+create table HR.CONSULTA 
+(
+   IDCONSULTA           INTEGER              not null,
+   IDMEDICO             INTEGER              not null,
+   IDPACIENTE           INTEGER              not null,
+   ESTADOCONSULTA       SMALLINT             not null,
+   IDEXAMEN             INTEGER,
+   IDSIGNOSVITALES      INTEGER              not null,
+   IDCLINICA            INTEGER              not null,  
+   FECHA                DATE                 not null,
+   SINTOMAS             VARCHAR2(200)        not null,
+   DIAGNOSTICO          VARCHAR2(200)        not null,
+   TRATAMIENTO          VARCHAR2(150),
+   MEDICAMENTOS         VARCHAR2(150),
+
+   constraint PK_CONSULTA primary key (IDCONSULTA)
+);
+
+/*==============================================================*/
+/* Table: SIGNOSVITALES                                         */
+/*==============================================================*/
+create table HR.SIGNOSVITALES 
+(
+    IDSIGNOSVITALES      INTEGER              not null,
+    TEMPERATURA          VARCHAR2(5)          not null,
+    PESO                 VARCHAR2(5)          not null,
+    ALTURA               VARCHAR2(5)          not null,
+    PRESIONARTERIAL      VARCHAR2(5)          not null,
+    PULSOCARDIACO        VARCHAR2(5)          not null,
+
+    constraint PK_SIGNOSVITALES primary key (IDSIGNOSVITALES)
+);
+
+/*==============================================================*/
+/* Table: DEPARTAMENTO                                          */
+/*==============================================================*/
+create table HR.DEPARTAMENTO 
+(
+   IDDEPARTAMENTO   INTEGER              not null,
+   NOMBRE           VARCHAR2(25)         not null,
+  
+   constraint PK_DEPARTAMENTO primary key (IDDEPARTAMENTO)
+);
+
+/*==============================================================*/
+/* Table: MUNICIPIO                                             */
+/*==============================================================*/
+create table HR.MUNICIPIO 
+(
+   IDMUNICIPIO          INTEGER              not null,
+   NOMBRE               VARCHAR2(25)         not null,
+   IDDEPARTAMENTO       INTEGER              not null,
+
+   constraint PK_MUNICIPIO primary key (IDMUNICIPIO)
+);
+/*==============================================================*/
+/* Table: EMPLEADOS                                             */
+/*==============================================================*/
+create table HR.EMPLEADOS (
+    IDEMPLEADO    INTEGER             not null,
+    /* Faltan campos de EMPLEADOS*/
+
+    constraint PK_EMPLEADO primary key (IDEMPLEADO)
+);
+
+/*==============================================================*/
+/* Table: RELACIONES                                            */
+/*==============================================================*/
+/*RELACION TABLA MUNICIPIO-DEPARTAMENTO*/
+alter table HR.MUNICIPIO
+   add constraint FK_MUNICIPIO_DEPARTAMENTO foreign key (IDDEPARTAMENTO)
+      references HR.DEPARTAMENTO (IDDEPARTAMENTO);
+
+/*RELACION TABLA CLINICA*/
+alter table HR.CLINICA
+   add constraint FK_CLINICA_DEPARTAMENTO foreign key (IDDEPARTAMENTO)
+      references HR.DEPARTAMENTO (IDDEPARTAMENTO);
+
+
+alter table HR.CLINICA
+   add constraint FK_CLINICA_MUNICIPIO foreign key (IDMUNICIPIO)
+      references HR.MUNICIPIO (IDMUNICIPIO);
+
+/*RELACION TABLA PACIENTE*/
+alter table HR.PACIENTE
+   add constraint FK_PACIENTE_MUNICIPIO foreign key (IDMUNICIPIO)
+      references HR.MUNICIPIO (IDMUNICIPIO);
+
+alter table HR.PACIENTE
+   add constraint FK_PACIENTE_DEPARTAMENTO foreign key (IDDEPARTAMENTO)
+      references HR.DEPARTAMENTO (IDDEPARTAMENTO);
+
+/*RELACION TABLA CONSULTAS*/
+alter table HR.CONSULTA
+   add constraint FK_CONSULTA_CLINICA foreign key (IDCLINICA)
+      references HR.CLINICA (IDCLINICA);
+
+alter table HR.CONSULTA
+   add constraint FK_CONSULTA_PACIENTE foreign key (IDPACIENTE)
+      references HR.PACIENTE (IDPACIENTE);
+
+alter table HR.CONSULTA
+   add constraint FK_CONSULTA_MEDICO foreign key (IDMEDICO)
+      references HR.MEDICO (IDMEDICO);
+
+alter table HR.CONSULTA
+   add constraint FK_CONSULTA_EXAMEN foreign key (IDEXAMEN)
+      references HR.EXAMEN (IDEXAMEN);
+
+alter table HR.CONSULTA
+   add constraint FK_CONSULTA_SIGNOSVITALES foreign key (IDSIGNOSVITALES)
+      references HR.SIGNOSVITALES (IDSIGNOSVITALES);
+
+/*RELACION TABLA MEDICO*/
+alter table HR.MEDICO
+   add constraint FK_MEDICO_CLINICA foreign key (IDCLINICA)
+      references HR.CLINICA (IDCLINICA);
+
+/*==============================================================*/
+/* PROGRAMACION                                                 */
+/*==============================================================*/
+
+CREATE SEQUENCE HR.MED_SEQ START WITH 1 INCREMENT BY 1;  
+CREATE SEQUENCE HR.PAC_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.CLI_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.EXA_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.CON_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.SIG_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.MUN_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.DEP_SEQ START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE HR.EMP_SEQ START WITH 1 INCREMENT BY 1;
+
+
+CREATE OR REPLACE TRIGGER HR.MED_BIR 
+BEFORE INSERT ON HR.MEDICO 
+FOR EACH ROW 
+BEGIN 
+    SELECT MED_SEQ.NEXTVAL
+    INTO :new.IDMEDICO
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.PAC_BIR 
+BEFORE INSERT ON HR.PACIENTE 
+FOR EACH ROW 
+BEGIN 
+    SELECT PAC_SEQ.NEXTVAL
+    INTO :new.IDPACIENTE
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.CLI_BIR 
+BEFORE INSERT ON HR.CLINICA 
+FOR EACH ROW 
+BEGIN 
+    SELECT HR.CLI_SEQ.NEXTVAL
+    INTO :new.IDCLINICA
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.EXA_BIR 
+BEFORE INSERT ON HR.EXAMEN
+FOR EACH ROW 
+BEGIN 
+    SELECT EXA_SEQ.NEXTVAL
+    INTO :new.IDEXAMEN
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.CON_BIR 
+BEFORE INSERT ON HR.CONSULTA
+FOR EACH ROW 
+BEGIN 
+    SELECT CON_SEQ.NEXTVAL
+    INTO :new.IDCONSULTA
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.SIG_BIR 
+BEFORE INSERT ON HR.SIGNOSVITALES
+FOR EACH ROW 
+BEGIN 
+    SELECT SIG_SEQ.NEXTVAL
+    INTO :new.IDSIGNOSVITALES
+    FROM dual;
+END;
+ 
+CREATE OR REPLACE TRIGGER HR.DEP_BIR 
+BEFORE INSERT ON HR.DEPARTAMENTO
+FOR EACH ROW 
+BEGIN 
+    SELECT DEP_SEQ.NEXTVAL
+    INTO :new.IDDEPARTAMENTO
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.MUN_BIR 
+BEFORE INSERT ON HR.MUNICIPIO
+FOR EACH ROW 
+BEGIN 
+    SELECT MUN_SEQ.NEXTVAL
+    INTO :new.IDMUNICIPIO
+    FROM dual;
+END;
+
+CREATE OR REPLACE TRIGGER HR.EMP_BIR 
+BEFORE INSERT ON HR.EMPLEADOS
+FOR EACH ROW 
+BEGIN 
+    SELECT EMP_SEQ.NEXTVAL
+    INTO :new.IDEMPLEADO
+    FROM dual;
+END;
+
+
+/*==============================================================*/
+/*   DATOS                                                      */
+/*==============================================================*/
+
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Ahuachapan');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Cabañas');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Chalatenango');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Cuscatlan');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('La Libertad');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('La Paz');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('La Union');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Morazan');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('San Miguel');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('San Salvador');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('San Vicente');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Santa Ana');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Sonsonate');
+INSERT INTO HR.DEPARTAMENTO (NOMBRE) VALUES ('Usulutan');
