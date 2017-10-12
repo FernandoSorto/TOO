@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 11, 2017 12:04:59 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Consulta" table="CONSULTA" schema="HR" optimistic-lock="version">
+        <id name="idconsulta" type="big_decimal">
+            <column name="IDCONSULTA" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="medico" class="Modelo.Medico" fetch="select">
+            <column name="IDMEDICO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="paciente" class="Modelo.Paciente" fetch="select">
+            <column name="IDPACIENTE" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="clinica" class="Modelo.Clinica" fetch="select">
+            <column name="IDCLINICA" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="examen" class="Modelo.Examen" fetch="select">
+            <column name="IDEXAMEN" precision="22" scale="0" />
+        </many-to-one>
+        <many-to-one name="signosvitales" class="Modelo.Signosvitales" fetch="select">
+            <column name="IDSIGNOSVITALES" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="estadoconsulta" type="big_decimal">
+            <column name="ESTADOCONSULTA" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="FECHA" length="7" not-null="true" />
+        </property>
+        <property name="sintomas" type="string">
+            <column name="SINTOMAS" length="200" not-null="true" />
+        </property>
+        <property name="diagnostico" type="string">
+            <column name="DIAGNOSTICO" length="200" not-null="true" />
+        </property>
+        <property name="tratamiento" type="string">
+            <column name="TRATAMIENTO" length="150" />
+        </property>
+        <property name="medicamentos" type="string">
+            <column name="MEDICAMENTOS" length="150" />
+        </property>
+    </class>
+</hibernate-mapping>

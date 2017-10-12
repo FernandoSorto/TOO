@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 11, 2017 12:04:59 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Paciente" table="PACIENTE" schema="HR" optimistic-lock="version">
+        <id name="idpaciente" type="big_decimal">
+            <column name="IDPACIENTE" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="departamento" class="Modelo.Departamento" fetch="select">
+            <column name="IDDEPARTAMENTO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="municipio" class="Modelo.Municipio" fetch="select">
+            <column name="IDMUNICIPIO" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="25" not-null="true" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="APELLIDOS" length="25" not-null="true" />
+        </property>
+        <property name="fechanacimiento" type="date">
+            <column name="FECHANACIMIENTO" length="7" not-null="true" />
+        </property>
+        <property name="profesion" type="string">
+            <column name="PROFESION" length="25" />
+        </property>
+        <property name="dui" type="string">
+            <column name="DUI" length="25" not-null="true" />
+        </property>
+        <property name="nombremadre" type="string">
+            <column name="NOMBREMADRE" length="50" />
+        </property>
+        <property name="apellidomadre" type="string">
+            <column name="APELLIDOMADRE" length="50" />
+        </property>
+        <property name="nombrepadre" type="string">
+            <column name="NOMBREPADRE" length="25" />
+        </property>
+        <property name="apellidopadre" type="string">
+            <column name="APELLIDOPADRE" length="25" />
+        </property>
+        <property name="conyugue" type="string">
+            <column name="CONYUGUE" length="50" />
+        </property>
+        <property name="estadocivil" type="string">
+            <column name="ESTADOCIVIL" length="25" not-null="true" />
+        </property>
+        <property name="genero" type="string">
+            <column name="GENERO" length="25" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="75" />
+        </property>
+        <set name="consultas" table="CONSULTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDPACIENTE" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Consulta" />
+        </set>
+    </class>
+</hibernate-mapping>

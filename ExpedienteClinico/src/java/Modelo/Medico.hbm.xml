@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 11, 2017 12:04:59 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Medico" table="MEDICO" schema="HR" optimistic-lock="version">
+        <id name="idmedico" type="big_decimal">
+            <column name="IDMEDICO" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="clinica" class="Modelo.Clinica" fetch="select">
+            <column name="IDCLINICA" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="25" not-null="true" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="APELLIDOS" length="25" not-null="true" />
+        </property>
+        <property name="especialidad" type="string">
+            <column name="ESPECIALIDAD" length="25" not-null="true" />
+        </property>
+        <set name="consultas" table="CONSULTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDMEDICO" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Consulta" />
+        </set>
+    </class>
+</hibernate-mapping>
