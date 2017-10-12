@@ -130,6 +130,10 @@
       <section>
 			<section class="main-content">
 			 <!-- body-->
+                         
+                         <!--modificar de aca para abajo-->
+                         
+                         
 				<h1>Agregar consulta</h1>
         <div class="block">
             <form class="form-horizontal" role="form" action="" method="GET"> 
@@ -188,7 +192,8 @@
 		</table>
 		
             			
-              
+              <!--modificar de aca para arriba-->
+                          
             </section>
        </section>
     </section>
