@@ -96,7 +96,7 @@
                         </a>
                      </li>
                      <li>
-                        <a href="agregar_Signos" title="agregar_signos" data-toggle="" class="no-submenu">
+                        <a href="agregar_Signos.jsp" title="agregar_signos" data-toggle="" class="no-submenu">
                            <span class="item-text">Agregar Signos Vitales</span>
                         </a>
                      </li>

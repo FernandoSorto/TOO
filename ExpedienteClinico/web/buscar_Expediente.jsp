@@ -98,12 +98,12 @@
                   </a>
                   <ul class="nav collapse ">
                      <li>
-                        <a href="agregar_consultas.jsp" title="agregar_consultas" data-toggle="" class="no-submenu">
+                        <a href="agregar_Consulta.jsp" title="agregar_consultas" data-toggle="" class="no-submenu">
                            <span class="item-text">Agregar Consultas</span>
                         </a>
                      </li>
                      <li>
-                        <a href="agregar_signos" title="agregar_signos" data-toggle="" class="no-submenu">
+                        <a href="agregar_Signos.jsp" title="agregar_signos" data-toggle="" class="no-submenu">
                            <span class="item-text">Agregar Signos Vitales</span>
                         </a>
                      </li>
